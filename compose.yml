@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: postgres_netscan
+    environment:
+      POSTGRES_DB: "netscan_db"
+      POSTGRES_PASSWORD: "notTheDefaul/t6"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
