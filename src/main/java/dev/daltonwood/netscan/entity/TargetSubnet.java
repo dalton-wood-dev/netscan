@@ -13,7 +13,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "subnetTargets")
+@Table(name = "subnet_targets")
 public class TargetSubnet {
 
     @Id
@@ -22,7 +22,7 @@ public class TargetSubnet {
 
     private String name;
 
-    private String cidrVal;
+    private String cidrValue;
 
     private String description;
 
@@ -49,12 +49,12 @@ public class TargetSubnet {
         this.name = name;
     }
 
-    public String getCidrVal() {
-        return cidrVal;
+    public String getCidrValue() {
+        return cidrValue;
     }
 
-    public void setCidrVal(String cidrVal) {
-        this.cidrVal = cidrVal;
+    public void setCidrValue(String cidrValue) {
+        this.cidrValue = cidrValue;
     }
 
     public String getDescription() {

@@ -11,6 +11,7 @@ package dev.daltonwood.netscan.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="scans")
@@ -20,13 +21,19 @@ public class Scan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String targetSubnet;
+    @ManyToOne
+    @JoinColumn(name = "target_subnet_id")
+    private TargetSubnet targetSubnet;
 
     private LocalDateTime startedAt;
 
     private LocalDateTime completedAt;
 
+    //    TODO: @Enumerated(EnumType.String)
     private String status;
+
+    @OneToMany(mappedBy = "scan", cascade = CascadeType.REMOVE)
+    private List<ScanResult> scanResults;
 
     private int assetsFoundCount;
 
@@ -43,11 +50,11 @@ public class Scan {
         this.id = id;
     }
 
-    public String getTargetSubnet() {
+    public TargetSubnet getTargetSubnet() {
         return targetSubnet;
     }
 
-    public void setTargetSubnet(String targetSubnet) {
+    public void setTargetSubnet(TargetSubnet targetSubnet) {
         this.targetSubnet = targetSubnet;
     }
 
@@ -73,6 +80,14 @@ public class Scan {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<ScanResult> getScanResults() {
+        return scanResults;
+    }
+
+    public void setScanResults(List<ScanResult> scanResults) {
+        this.scanResults = scanResults;
     }
 
     public int getAssetsFoundCount() {

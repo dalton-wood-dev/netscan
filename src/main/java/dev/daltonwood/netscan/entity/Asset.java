@@ -31,6 +31,7 @@ public class Asset {
 
     private LocalDateTime lastSeenAt;
 
+//    TODO: @Enumerated(EnumType.String)
     private String currentStatus;
 
     private String notes;

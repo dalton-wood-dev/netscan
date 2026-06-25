@@ -14,16 +14,20 @@ import java.net.InetAddress;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "scanResults")
+@Table(name = "scan_results")
 public class ScanResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long scanId;
+    @ManyToOne
+    @JoinColumn(name = "scan_id")
+    private Scan scan;
 
-    private Long assetId;
+    @ManyToOne
+    @JoinColumn(name = "asset_id")
+    private Asset asset;
 
     private InetAddress ipAddr;
 
@@ -44,20 +48,20 @@ public class ScanResult {
         this.id = id;
     }
 
-    public Long getScanId() {
-        return scanId;
+    public Scan getScan() {
+        return scan;
     }
 
-    public void setScanId(Long scanId) {
-        this.scanId = scanId;
+    public void setScan(Scan scan) {
+        this.scan = scan;
     }
 
-    public Long getAssetId() {
-        return assetId;
+    public Asset getAsset() {
+        return asset;
     }
 
-    public void setAssetId(Long assetId) {
-        this.assetId = assetId;
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 
     public InetAddress getIpAddr() {
