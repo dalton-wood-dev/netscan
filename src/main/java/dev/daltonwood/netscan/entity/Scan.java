@@ -29,8 +29,8 @@ public class Scan {
 
     private LocalDateTime completedAt;
 
-    //    TODO: @Enumerated(EnumType.String)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private ScanStatus status;
 
     @OneToMany(mappedBy = "scan", cascade = CascadeType.REMOVE)
     private List<ScanResult> scanResults;
@@ -74,11 +74,11 @@ public class Scan {
         this.completedAt = completedAt;
     }
 
-    public String getStatus() {
+    public ScanStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ScanStatus status) {
         this.status = status;
     }
 

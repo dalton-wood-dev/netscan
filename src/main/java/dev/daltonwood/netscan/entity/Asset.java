@@ -31,8 +31,8 @@ public class Asset {
 
     private LocalDateTime lastSeenAt;
 
-//    TODO: @Enumerated(EnumType.String)
-    private String currentStatus;
+    @Enumerated(EnumType.STRING)
+    private AssetStatus currentStatus;
 
     private String notes;
 
@@ -91,11 +91,11 @@ public class Asset {
         this.lastSeenAt = lastSeenAt;
     }
 
-    public String getCurrentStatus() {
+    public AssetStatus getCurrentStatus() {
         return currentStatus;
     }
 
-    public void setCurrentStatus(String currentStatus) {
+    public void setCurrentStatus(AssetStatus currentStatus) {
         this.currentStatus = currentStatus;
     }
 
