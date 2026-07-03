@@ -40,6 +40,12 @@ public class ScanResult {
     public ScanResult() {
     }
 
+    public ScanResult(InetAddress ipAddr, Scan scan, LocalDateTime observedAt) {
+        this.ipAddr = ipAddr;
+        this.scan = scan;
+        this.observedAt = observedAt;
+    }
+
     public Long getId() {
         return id;
     }

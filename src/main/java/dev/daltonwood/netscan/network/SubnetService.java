@@ -29,10 +29,18 @@ public class SubnetService {
         }
     }
 
-    public String getSubnetInfo(String userInput) {
+    public String getSubnetInfoString(String cidrValue) {
 
-        SubnetUtils block = new SubnetUtils(userInput);
-        return block.toString();
+        SubnetUtils block = new SubnetUtils(cidrValue);
+        return block.getInfo().toString();
+    }
+
+    public Iterable<String> getIterableFromSubnet(String cidrValue) {
+
+        SubnetUtils subnetUtils = new SubnetUtils(cidrValue);
+
+        return subnetUtils.getInfo().iterableAddressStrings();
+
     }
 
 }

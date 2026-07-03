@@ -1,7 +1,10 @@
 package dev.daltonwood.netscan.bootstrap;
 
 import dev.daltonwood.netscan.entity.Scan;
-import dev.daltonwood.netscan.service.StartScanService;
+import dev.daltonwood.netscan.entity.ScanResult;
+import dev.daltonwood.netscan.network.SubnetService;
+import dev.daltonwood.netscan.repository.ScanResultRepo;
+import dev.daltonwood.netscan.service.ScanService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +13,15 @@ import java.util.Scanner;
 @Component
 public class Bootstrap implements CommandLineRunner {
 
-    private final StartScanService startScanService;
+    private final ScanService scanService;
     private final Scanner scanner = new Scanner(System.in);
+    private final SubnetService subnetService;
+    private final ScanResultRepo scanResultRepo;
 
-    public Bootstrap(StartScanService startScanService) {
-        this.startScanService = startScanService;
+    public Bootstrap(ScanService scanService, SubnetService subnetService, ScanResultRepo scanResultRepo) {
+        this.scanService = scanService;
+        this.subnetService = subnetService;
+        this.scanResultRepo = scanResultRepo;
     }
 
     @Override
@@ -22,6 +29,7 @@ public class Bootstrap implements CommandLineRunner {
 
         System.out.println("NetScan started...");
 
+//        TODO: Uncomment to prompt actual user input
         Scan initialScan = null;
 
         System.out.print("Input CIDR value:");
@@ -29,7 +37,7 @@ public class Bootstrap implements CommandLineRunner {
 
         while (initialScan == null) {
             try {
-                initialScan = startScanService.createScan(userInput);
+                initialScan = scanService.createScan(userInput);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.out.print("Input CIDR value:");
@@ -37,11 +45,14 @@ public class Bootstrap implements CommandLineRunner {
             }
         }
 
+//        TODO: Remove hardcoded scan
+//        Scan initialScan = scanService.createScan("10.12.12.0/24");
+
+        System.out.println(scanService.getScanInfo(initialScan.getTargetSubnet().getCidrValue()));
         System.out.println("CIDR validated...");
-        System.out.println(startScanService.getScanInfo(initialScan.getTargetSubnet().getCidrValue()));
         System.out.println("Scan status: " + initialScan.getStatus());
 
-        System.out.println("Start scan? \nY or N");
+        System.out.println("Continue with scan? \nY or N");
         String consent = scanner.nextLine();
 
         while (!consent.equalsIgnoreCase("y") && !consent.equalsIgnoreCase("n")) {
@@ -51,11 +62,18 @@ public class Bootstrap implements CommandLineRunner {
 
         if (consent.equalsIgnoreCase("y")) {
 
-            System.out.println(startScanService.startScan(initialScan));
+            scanService.startScan(initialScan);
 
         } else if (consent.equalsIgnoreCase("n")) {
 
+            System.out.println("Scan status: " + initialScan.getStatus());
+
             System.out.println("Scan cancelled...");
         }
+
+        for (ScanResult result : initialScan.getScanResults()) {
+            System.out.println(result.getIpAddr() + " is reachable");
+        }
+        System.out.println("Scan status: " + initialScan.getStatus());
     }
 }

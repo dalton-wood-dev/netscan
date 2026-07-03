@@ -21,7 +21,7 @@ public class Scan {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "target_subnet_id")
     private TargetSubnet targetSubnet;
 
@@ -32,7 +32,7 @@ public class Scan {
     @Enumerated(EnumType.STRING)
     private ScanStatus status;
 
-    @OneToMany(mappedBy = "scan", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "scan", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<ScanResult> scanResults;
 
     private int assetsFoundCount;
