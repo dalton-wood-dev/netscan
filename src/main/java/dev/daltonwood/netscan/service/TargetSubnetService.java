@@ -1,7 +1,6 @@
 package dev.daltonwood.netscan.service;
 
 import dev.daltonwood.netscan.entity.TargetSubnet;
-import dev.daltonwood.netscan.network.IpService;
 import dev.daltonwood.netscan.repository.TargetSubnetRepo;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

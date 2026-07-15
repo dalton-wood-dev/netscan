@@ -65,7 +65,7 @@ public class Bootstrap implements CommandLineRunner {
 
         if (consent.equalsIgnoreCase("y")) {
 
-            scanService.startScan(initialScan);
+            initialScan = scanService.startScan(initialScan);
 
         } else if (consent.equalsIgnoreCase("n")) {
 
