@@ -10,9 +10,11 @@ package dev.daltonwood.netscan.network;
 
 import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
-public class SubnetService {
+@Service
+public class IpService {
 
     public boolean isValidCidr(String userInput) {
 
@@ -29,7 +31,7 @@ public class SubnetService {
         }
     }
 
-    public String getSubnetInfoString(String cidrValue) {
+    public String getSubnetInfo(String cidrValue) {
 
         SubnetUtils block = new SubnetUtils(cidrValue);
         return block.getInfo().toString();
