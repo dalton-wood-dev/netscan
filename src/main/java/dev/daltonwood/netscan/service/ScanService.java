@@ -71,6 +71,7 @@ public class ScanService {
         scan.setScanResults(scanResults);
         scan.setCompletedAt(LocalDateTime.now());
         scan.setStatus(ScanStatus.COMPLETED);
-        return scanRepo.save(scan);
+        scanRepo.save(scan);
+        return scan;
     }
 }

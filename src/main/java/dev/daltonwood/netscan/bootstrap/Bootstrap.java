@@ -7,7 +7,16 @@ import dev.daltonwood.netscan.service.ScanService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
+
+/*
+*
+*
+*
+*
+*
+*/
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -65,17 +74,20 @@ public class Bootstrap implements CommandLineRunner {
 
         if (consent.equalsIgnoreCase("y")) {
 
-            initialScan = scanService.startScan(initialScan);
+            Scan completedScan = scanService.startScan(initialScan);
+
+            List<ScanResult> results = completedScan.getScanResults();
+
+            for (ScanResult result : results) {
+                System.out.println(result.getIpAddr().toString() + " is reachable");
+            }
+
+            System.out.println("Scan status: " + initialScan.getStatus());
 
         } else if (consent.equalsIgnoreCase("n")) {
 
             System.out.println("Scan status: " + initialScan.getStatus());
-            System.out.println("Scan cancelled...");
         }
 
-        for (ScanResult result : initialScan.getScanResults()) {
-            System.out.println(result.getIpAddr() + " is reachable");
-        }
-        System.out.println("Scan status: " + initialScan.getStatus());
     }
 }
